@@ -5,7 +5,7 @@ from pydantic_ai.providers.google import GoogleProvider
 from schema_extractor.config import LLModelConfig
 
 
-def build_model(config: LLModelConfig) -> Model:
+def build_llm(config: LLModelConfig) -> Model:
     provider_prefix, _, model_name = config.name.partition(":")
 
     match provider_prefix:
