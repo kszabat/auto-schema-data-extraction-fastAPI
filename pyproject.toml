@@ -40,3 +40,7 @@ dev = [
     "pytest-mock>=3.16.0",
     "ruff>=0.16.10",
 ]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
