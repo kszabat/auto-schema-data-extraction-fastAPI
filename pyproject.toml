@@ -1,5 +1,5 @@
 [project]
-name = "auto-schema-data-extraction-fastapi"
+name = "schema-extractor"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"

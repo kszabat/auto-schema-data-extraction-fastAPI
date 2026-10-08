@@ -263,63 +263,6 @@ wheels = [
 ]
 
 [[package]]
-name = "auto-schema-data-extraction-fastapi"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "alembic" },
-    { name = "docling" },
-    { name = "fastapi" },
-    { name = "psycopg", extra = ["binary"] },
-    { name = "pwdlib", extra = ["argon2"] },
-    { name = "pydantic" },
-    { name = "pydantic-ai" },
-    { name = "pydantic-settings" },
-    { name = "pyjwt" },
-    { name = "python-dotenv" },
-    { name = "python-multipart" },
-    { name = "sqlalchemy" },
-    { name = "uvicorn", extra = ["standard"] },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "httpx" },
-    { name = "mypy" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "pytest-mock" },
-    { name = "ruff" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "alembic", specifier = ">=1.20.0" },
-    { name = "docling", specifier = ">=2.134.0" },
-    { name = "fastapi", specifier = ">=0.142.2" },
-    { name = "psycopg", extras = ["binary"], specifier = ">=3.3.6" },
-    { name = "pwdlib", extras = ["argon2"], specifier = ">=0.3.1" },
-    { name = "pydantic", specifier = ">=2.13.5" },
-    { name = "pydantic-ai", specifier = ">=2.54.0" },
-    { name = "pydantic-settings", specifier = ">=2.15.0" },
-    { name = "pyjwt", specifier = ">=2.15.1" },
-    { name = "python-dotenv", specifier = ">=1.2.4" },
-    { name = "python-multipart", specifier = ">=0.0.32" },
-    { name = "sqlalchemy", specifier = ">=2.1.3" },
-    { name = "uvicorn", extras = ["standard"], specifier = ">=0.54.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "httpx", specifier = ">=0.28.1" },
-    { name = "mypy", specifier = ">=2.4.0" },
-    { name = "pytest", specifier = ">=9.1.1" },
-    { name = "pytest-cov", specifier = ">=7.1.0" },
-    { name = "pytest-mock", specifier = ">=3.16.0" },
-    { name = "ruff", specifier = ">=0.16.10" },
-]
-
-[[package]]
 name = "beartype"
 version = "0.22.9"
 source = { registry = "https://pypi.org/simple" }
@@ -3894,6 +3837,63 @@ wheels = [
 torch = [
     { name = "numpy" },
     { name = "torch" },
+]
+
+[[package]]
+name = "schema-extractor"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "alembic" },
+    { name = "docling" },
+    { name = "fastapi" },
+    { name = "psycopg", extra = ["binary"] },
+    { name = "pwdlib", extra = ["argon2"] },
+    { name = "pydantic" },
+    { name = "pydantic-ai" },
+    { name = "pydantic-settings" },
+    { name = "pyjwt" },
+    { name = "python-dotenv" },
+    { name = "python-multipart" },
+    { name = "sqlalchemy" },
+    { name = "uvicorn", extra = ["standard"] },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "httpx" },
+    { name = "mypy" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-mock" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "alembic", specifier = ">=1.20.0" },
+    { name = "docling", specifier = ">=2.134.0" },
+    { name = "fastapi", specifier = ">=0.142.2" },
+    { name = "psycopg", extras = ["binary"], specifier = ">=3.3.6" },
+    { name = "pwdlib", extras = ["argon2"], specifier = ">=0.3.1" },
+    { name = "pydantic", specifier = ">=2.13.5" },
+    { name = "pydantic-ai", specifier = ">=2.54.0" },
+    { name = "pydantic-settings", specifier = ">=2.15.0" },
+    { name = "pyjwt", specifier = ">=2.15.1" },
+    { name = "python-dotenv", specifier = ">=1.2.4" },
+    { name = "python-multipart", specifier = ">=0.0.32" },
+    { name = "sqlalchemy", specifier = ">=2.1.3" },
+    { name = "uvicorn", extras = ["standard"], specifier = ">=0.54.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "httpx", specifier = ">=0.28.1" },
+    { name = "mypy", specifier = ">=2.4.0" },
+    { name = "pytest", specifier = ">=9.1.1" },
+    { name = "pytest-cov", specifier = ">=7.1.0" },
+    { name = "pytest-mock", specifier = ">=3.16.0" },
+    { name = "ruff", specifier = ">=0.16.10" },
 ]
 
 [[package]]
