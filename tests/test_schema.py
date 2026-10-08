@@ -2,8 +2,8 @@ import datetime
 
 import pytest
 from pydantic import ValidationError
-from schema_extractor.schema.builder import build_extraction_model
 
+from schema_extractor.schema.builder import build_extraction_model
 from schema_extractor.schema.meta_models import FieldDefinition, TemplateSpec
 
 
