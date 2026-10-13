@@ -30,3 +30,13 @@ class VersionConflictError(DomainError):
 
 class SchemaGenerationError(DomainError):
     """The agent failed to generate a valid schema specification."""
+
+
+class EmailAlreadyRegisteredError(DomainError):
+    def __init__(self) -> None:
+        super().__init__("Email already registered.")
+
+
+class InvalidCredentialsError(DomainError):
+    def __init__(self) -> None:
+        super().__init__("Incorrect email or password.")
