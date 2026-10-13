@@ -3859,6 +3859,7 @@ source = { editable = "." }
 dependencies = [
     { name = "alembic" },
     { name = "docling" },
+    { name = "email-validator" },
     { name = "fastapi" },
     { name = "psycopg", extra = ["binary"] },
     { name = "pwdlib", extra = ["argon2"] },
@@ -3887,6 +3888,7 @@ dev = [
 requires-dist = [
     { name = "alembic", specifier = ">=1.20.0" },
     { name = "docling", specifier = ">=2.134.0" },
+    { name = "email-validator", specifier = ">=2.3.0" },
     { name = "fastapi", specifier = ">=0.142.2" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.3.6" },
     { name = "pwdlib", extras = ["argon2"], specifier = ">=0.3.1" },

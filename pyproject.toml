@@ -10,6 +10,7 @@ requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.20.0",
     "docling>=2.134.0",
+    "email-validator>=2.3.0",
     "fastapi>=0.142.2",
     "psycopg[binary]>=3.3.6",
     "pwdlib[argon2]>=0.3.1",
