@@ -15,7 +15,7 @@ from schema_extractor.schema.meta_models import TemplateSpec
 
 def create_user(db: Session, *, email: str, hashed_password: str):
     user = User(email=email, hashed_password=hashed_password)
-    db.add(User)
+    db.add(user)
     db.flush()
     return user
 
@@ -72,9 +72,7 @@ def list_versions(db: Session, *, schema_id: uuid.UUID) -> list[SchemaVersion]:
 def create_schema(
     db: Session, *, user_id: uuid.UUID, request_text: str, spec: TemplateSpec
 ) -> tuple[Schema, SchemaVersion]:
-    schema = Schema(
-        schema=Schema(user_id=user_id, name=spec.name, request_text=request_text)
-    )
+    schema = Schema(user_id=user_id, name=spec.name, request_text=request_text)
     db.add(schema)
     db.flush()
 
@@ -111,7 +109,7 @@ def add_version(
     )
     if expected_latest is not None and latest != expected_latest:
         raise VersionConflictError(expected=expected_latest, actual=latest)
-    
+
     version = SchemaVersion(
         schema_id=schema.id,
         version_number=latest + 1,
