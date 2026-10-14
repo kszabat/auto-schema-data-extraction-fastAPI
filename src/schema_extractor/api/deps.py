@@ -39,5 +39,5 @@ def get_current_user(
 def get_schema_agent() -> SchemaAgent:
     return build_schema_agent(build_llm(get_settings().schema_model))
 
-current_user = Annotated[User, Depends(get_current_user)]
+CurrentUser = Annotated[User, Depends(get_current_user)]
 SchemaAgentDep = Annotated[SchemaAgent, Depends(get_schema_agent)]
