@@ -38,6 +38,14 @@ def create_schema(
     return _detail(schema, version)
 
 
+@router.get("/{schema_id}", response_model=SchemaDetailOut)
+def get_schema(schema_id: uuid.UUID, db: DbSession, user: CurrentUser):
+    schema, version = schema_service.get_schema_with_latest(
+        db, user_id=user.id, schema_id=schema_id
+    )
+    return _detail(schema, version)
+
+
 @router.get("", response_model=list[SchemaOut])
 def list_schemas(db: DbSession, user: CurrentUser):
     return schema_service.list_user_schemas(db, user_id=user.id)

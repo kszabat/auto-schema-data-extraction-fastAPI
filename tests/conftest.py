@@ -5,10 +5,20 @@ from pathlib import Path
 import pytest
 from alembic import command
 from alembic.config import Config
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from pydantic_ai import models
+from pydantic_ai.models.test import TestModel
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
+
+from schema_extractor.agents.schema_agent import build_schema_agent
+from schema_extractor.api.deps import get_schema_agent
+from schema_extractor.api.main import create_app
+from schema_extractor.db import repositories
+from schema_extractor.db.session import get_db
+from schema_extractor.security import create_access_token
 
 os.environ.setdefault("SECRET_KEY", "test-secret-key-for-tests-only-0123456789")
 
@@ -56,7 +66,6 @@ def engine():
 
 @pytest.fixture()
 def db(engine) -> Iterator[Session]:
-    """Sesja w transakcji, którą wycofujemy po teście: testy nie wpływają na siebie."""
     connection = engine.connect()
     transaction = connection.begin()
     session = Session(
@@ -75,3 +84,39 @@ def db(engine) -> Iterator[Session]:
 @pytest.fixture(autouse=True)
 def block_model_requests(monkeypatch):
     monkeypatch.setattr(models, "ALLOW_MODEL_REQUESTS", False)
+
+
+@pytest.fixture()
+def app(db) -> FastAPI:
+    application = create_app()
+    application.dependency_overrides[get_db] = lambda: db
+    return application
+
+
+@pytest.fixture()
+def client(app) -> TestClient:
+    return TestClient(app)
+
+
+@pytest.fixture()
+def use_agent(app):
+    def _use(output: dict) -> None:
+        agent = build_schema_agent(TestModel(custom_output_args=output))
+        app.dependency_overrides[get_schema_agent] = lambda: agent
+
+    return _use
+
+
+def _headers_for(db, email: str) -> dict[str, str]:
+    user = repositories.create_user(db, email=email, hashed_password="not-used")
+    return {"Authorization": f"Bearer {create_access_token(user.id)}"}
+
+
+@pytest.fixture()
+def auth_headers(db):
+    return _headers_for(db, "a@example.com")
+
+
+@pytest.fixture()
+def other_headers(db):
+    return _headers_for(db, "b@example.com")
