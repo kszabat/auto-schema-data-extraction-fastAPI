@@ -14,7 +14,6 @@ from schema_extractor.errors import (
     VersionNotFoundError,
 )
 
-
 logger = logging.getLogger(__name__)
 
 _STATUS_BY_ERROR: dict[type[DomainError], int] = {

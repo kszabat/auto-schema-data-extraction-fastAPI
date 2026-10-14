@@ -10,7 +10,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
 
-os.environ.setdefault("SECRET_KEY", "test-secret")
+os.environ.setdefault("SECRET_KEY", "test-secret-key-for-tests-only-0123456789")
 
 ROOT = Path(__file__).resolve().parents[1]
 TEST_DATABASE_URL = os.getenv(
