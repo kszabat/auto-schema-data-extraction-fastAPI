@@ -13,7 +13,6 @@ from schema_extractor.llm.factory import build_llm
 from schema_extractor.security import decode_access_token
 from schema_extractor.services.schema_service import SchemaAgent
 
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 DbSession = Annotated[Session, Depends(get_db)]
