@@ -48,6 +48,7 @@ class Settings(BaseSettings):
     storage_dir: Path = Path("data/uploads")
     max_upload_mb: int = 10
     max_pdf_pages: int = 50
+    max_active_extractions_per_user: int = 3
 
     @model_validator(mode="after")
     def sync_extr_model(self):
