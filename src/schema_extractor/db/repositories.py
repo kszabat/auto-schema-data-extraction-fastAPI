@@ -11,6 +11,7 @@ from schema_extractor.db.models import (
 )
 from schema_extractor.errors import VersionConflictError
 from schema_extractor.schema.meta_models import TemplateSpec
+from schema_extractor.db.models import Extraction, ExtractionStatus
 
 
 def create_user(db: Session, *, email: str, hashed_password: str):
@@ -120,3 +121,61 @@ def add_version(
     db.add(version)
     db.flush()
     return version
+
+
+_ACTIVE_STATUSES = (ExtractionStatus.PENDING, ExtractionStatus.RUNNING)
+
+
+def create_extraction(
+    db: Session,
+    *,
+    user_id: uuid.UUID,
+    schema_version_id: uuid.UUID,
+    filename: str,
+    storage_key: str,
+) -> Extraction:
+    extraction = Extraction(
+        user_id=user_id,
+        schema_version_id=schema_version_id,
+        filename=filename,
+        storage_key=storage_key,
+    )
+    db.add(extraction)
+    db.flush()
+    return extraction
+
+
+def get_extraction(
+    db: Session, *, user_id: uuid.UUID, extraction_id: uuid.UUID
+) -> Extraction | None:
+    return db.scalar(
+        select(Extraction).where(
+            Extraction.id == extraction_id, Extraction.user_id == user_id
+        )
+    )
+
+
+def list_extractions(
+    db: Session, *, user_id: uuid.UUID, limit: int = 50
+) -> list[Extraction]:
+    stmt = (
+        select(Extraction)
+        .where(Extraction.user_id == user_id)
+        .order_by(Extraction.created_at.desc())
+        .limit(limit)
+    )
+    return list(db.scalars(stmt))
+
+
+def count_active_extractions(db: Session, *, user_id: uuid.UUID) -> int:
+    stmt = (
+        select(func.count())
+        .select_from(Extraction)
+        .where(Extraction.user_id == user_id, Extraction.status.in_(_ACTIVE_STATUSES))
+    )
+    return db.scalar(stmt) or 0
+
+def list_active_extractions(db: Session, *, user_id: uuid.UUID) -> list[Extraction]:
+    return list(
+        db.scalars(select(Extraction).where(Extraction.status.in_(_ACTIVE_STATUSES)))
+    )
