@@ -1,5 +1,4 @@
 import re
-
 from pathlib import Path
 
 _KEY_RE = re.compile(r"[0-9a-f]{32}")
