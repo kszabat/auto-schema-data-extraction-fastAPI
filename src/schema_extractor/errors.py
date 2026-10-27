@@ -40,3 +40,18 @@ class EmailAlreadyRegisteredError(DomainError):
 class InvalidCredentialsError(DomainError):
     def __init__(self) -> None:
         super().__init__("Incorrect email or password.")
+
+
+class ExtractionNotFoundError(DomainError):
+    def __init__(self, extraction_id: uuid.UUID) -> None:
+        self.extraction_id = extraction_id
+        super().__init__(f"Extraction {extraction_id} not found.")
+
+
+class TooManyActiveExtractionsError(DomainError):
+    def __init__(self, limit: int) -> None:
+        self.limit = limit
+        super().__init__(
+            f"Too many extractions in progress (limit {limit}). "
+            "Wait for one to finish and try again."
+        )
