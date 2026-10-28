@@ -45,6 +45,33 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg://app:${POSTGRES_PASSWORD:-app}@db:5432/app
+      SECRET_KEY: ${SECRET_KEY}
+      USE_SAME_MODEL: ${USE_SAME_MODEL:-true}
+      SCHEMA_MODEL__NAME: ${SCHEMA_MODEL__NAME:-google:gemini-3-flash-preview}
+      SCHEMA_MODEL__API_KEY: ${SCHEMA_MODEL__API_KEY}
+      EXTRACTION_MODEL__NAME: ${EXTRACTION_MODEL__NAME:-}
+      EXTRACTION_MODEL__API_KEY: ${EXTRACTION_MODEL__API_KEY:-}
+      STORAGE_DIR: /data/uploads
+    volumes:
+      - uploads:/data/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health').read()"]
+      interval: 10s
+      timeout: 5s
+      start_period: 20s
+      retries: 5
+    restart: unless-stopped
 volumes:
   pgdata:
   pgadmin_data:
+  uploads:
