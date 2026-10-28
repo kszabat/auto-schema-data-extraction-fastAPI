@@ -69,7 +69,7 @@ def create_extraction(
     if repositories.count_active_extractions(db, user_id=user_id) >= max_active:
         raise TooManyActiveExtractionsError(max_active)
 
-    key = uuid.uuid4().hex()
+    key = uuid.uuid4().hex
     storage.save(key, data)
     try:
         extraction = repositories.create_extraction(
@@ -152,11 +152,17 @@ def recover_interrupted(db: Session, *, storage: FileStorage) -> int:
     db.commit()
     return len(interrupted)
 
-def get_user_extraction(db: Session,*, user_id: uuid.UUID, extraction_id: uuid.UUID) -> Extraction:
-    extraction = repositories.get_extraction(db, user_id=user_id, extraction_id=extraction_id)
+
+def get_user_extraction(
+    db: Session, *, user_id: uuid.UUID, extraction_id: uuid.UUID
+) -> Extraction:
+    extraction = repositories.get_extraction(
+        db, user_id=user_id, extraction_id=extraction_id
+    )
     if extraction is None:
         raise ExtractionNotFoundError(extraction_id)
     return extraction
+
 
 def list_user_extractions(db: Session, user_id: uuid.UUID) -> list[Extraction]:
     repositories.list_extractions(db, user_id=user_id)
