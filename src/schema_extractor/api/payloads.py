@@ -1,10 +1,10 @@
 import uuid
 from datetime import datetime
-
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from typing import Any
 
-from schema_extractor.db.models import VersionSource, ExtractionStatus
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
+
+from schema_extractor.db.models import ExtractionStatus, VersionSource
 from schema_extractor.schema.meta_models import TemplateSpec
 
 

@@ -14,7 +14,6 @@ from schema_extractor.api.deps import (
 from schema_extractor.api.payloads import ExtractionOut
 from schema_extractor.services import extraction_service
 
-
 router = APIRouter(prefix="/extractions", tags=["extractions"])
 
 

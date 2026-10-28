@@ -4,6 +4,8 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from schema_extractor.db.models import (
+    Extraction,
+    ExtractionStatus,
     Schema,
     SchemaVersion,
     User,
@@ -11,7 +13,6 @@ from schema_extractor.db.models import (
 )
 from schema_extractor.errors import VersionConflictError
 from schema_extractor.schema.meta_models import TemplateSpec
-from schema_extractor.db.models import Extraction, ExtractionStatus
 
 
 def create_user(db: Session, *, email: str, hashed_password: str):

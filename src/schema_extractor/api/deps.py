@@ -3,19 +3,17 @@ from typing import Annotated
 import jwt
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
+from pydantic_ai.models import Model
 from sqlalchemy.orm import Session
 
 from schema_extractor.agents.schema_agent import build_schema_agent
-from schema_extractor.config import get_settings
+from schema_extractor.config import Settings, get_settings
 from schema_extractor.db.models import User
-from schema_extractor.db.session import get_db
+from schema_extractor.db.session import get_db, get_session_factory
 from schema_extractor.llm.factory import build_llm
 from schema_extractor.security import decode_access_token
-from schema_extractor.services.schema_service import SchemaAgent
-from pydantic_ai.models import Model
-from schema_extractor.config import Settings
-from schema_extractor.db.session import get_session_factory
 from schema_extractor.services.extraction_service import SessionFactory
+from schema_extractor.services.schema_service import SchemaAgent
 from schema_extractor.storage import FileStorage
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
