@@ -175,7 +175,8 @@ def count_active_extractions(db: Session, *, user_id: uuid.UUID) -> int:
     )
     return db.scalar(stmt) or 0
 
-def list_active_extractions(db: Session, *, user_id: uuid.UUID) -> list[Extraction]:
+
+def list_active_extractions(db: Session) -> list[Extraction]:
     return list(
         db.scalars(select(Extraction).where(Extraction.status.in_(_ACTIVE_STATUSES)))
     )
