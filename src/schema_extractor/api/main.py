@@ -88,6 +88,11 @@ def create_app() -> FastAPI:
     app.include_router(auth.router)
     app.include_router(schemas.router)
     app.include_router(extractions.router)
+
+    @app.get("/health", tags=["meta"])
+    def health():
+        return {"status": "ok"}
+
     return app
 
 
