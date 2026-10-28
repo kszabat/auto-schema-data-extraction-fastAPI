@@ -12,6 +12,11 @@ from schema_extractor.db.session import get_db
 from schema_extractor.llm.factory import build_llm
 from schema_extractor.security import decode_access_token
 from schema_extractor.services.schema_service import SchemaAgent
+from pydantic_ai.models import Model
+from schema_extractor.config import Settings
+from schema_extractor.db.session import get_session_factory
+from schema_extractor.services.extraction_service import SessionFactory
+from schema_extractor.storage import FileStorage
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
@@ -36,8 +41,26 @@ def get_current_user(
         raise credentials_error
     return user
 
+
 def get_schema_agent() -> SchemaAgent:
     return build_schema_agent(build_llm(get_settings().schema_model))
 
+
+def get_storage() -> FileStorage:
+    return FileStorage(get_settings().storage_dir)
+
+
+def get_extraction_model() -> Model:
+    return build_llm(get_settings().extraction_model)
+
+
+def get_task_session_factory() -> SessionFactory:
+    return get_session_factory()
+
+
 CurrentUser = Annotated[User, Depends(get_current_user)]
 SchemaAgentDep = Annotated[SchemaAgent, Depends(get_schema_agent)]
+SettingsDep = Annotated[Settings, Depends(get_settings)]
+StorageDep = Annotated[FileStorage, Depends(get_storage)]
+ExtractionModelDep = Annotated[Model, Depends(get_extraction_model)]
+TaskSessionFactoryDep = Annotated[SessionFactory, Depends(get_task_session_factory)]
