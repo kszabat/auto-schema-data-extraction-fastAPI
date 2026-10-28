@@ -165,4 +165,4 @@ def get_user_extraction(
 
 
 def list_user_extractions(db: Session, user_id: uuid.UUID) -> list[Extraction]:
-    repositories.list_extractions(db, user_id=user_id)
+    return repositories.list_extractions(db, user_id=user_id)
