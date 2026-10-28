@@ -38,6 +38,7 @@ class Settings(BaseSettings):
     use_same_model: bool = False
     schema_model: LLModelConfig = Field(default_factory=LLModelConfig)
     extraction_model: LLModelConfig = Field(default_factory=LLModelConfig)
+    llm_timeout_seconds: int = 30
 
     # DB and authentication
     database_url: str = "postgresql+psycopg://app:app@localhost:5432/app"
