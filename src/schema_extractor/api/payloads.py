@@ -2,8 +2,9 @@ import uuid
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from typing import Any
 
-from schema_extractor.db.models import VersionSource
+from schema_extractor.db.models import VersionSource, ExtractionStatus
 from schema_extractor.schema.meta_models import TemplateSpec
 
 
@@ -63,3 +64,17 @@ class SchemaOut(BaseModel):
 
 class SchemaDetailOut(SchemaOut):
     latest_version: SchemaVersionOut
+
+
+class ExtractionOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: uuid.UUID
+    schema_version_id: uuid.UUID
+    filename: str
+    status: ExtractionStatus
+    result: dict[str, Any] | None
+    error: str | None
+    created_at: datetime
+    started_at: datetime | None
+    finished_at: datetime | None
