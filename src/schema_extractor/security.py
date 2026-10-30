@@ -43,7 +43,7 @@ def decode_access_token(token: str) -> uuid.UUID:
 
     try:
         return uuid.UUID(payload["sub"])
-    except jwt.InvalidKeyError as e:
+    except (ValueError, TypeError, AttributeError) as e:
         raise jwt.InvalidTokenError("Invalid subject") from e
 
 
