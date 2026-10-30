@@ -25,7 +25,7 @@ def create_access_token(
     user_id: uuid.UUID, expires_delta: datetime | None = None
 ) -> str:
     settings = get_settings()
-    delta = expires_delta or timedelta(settings.access_token_expire_minutes)
+    delta = expires_delta or timedelta(minutes=settings.access_token_expire_minutes)
     payload = {"sub": str(user_id), "exp": datetime.now(UTC) + delta}
     return jwt.encode(
         payload, settings.secret_key.get_secret_value(), algorithm=ALGORITHM
